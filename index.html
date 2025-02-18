@@ -57,16 +57,35 @@
 </head>
 
 <body>
-    <h2>Сіз мерейтойға шақырылдыңыз!</h2>
-    <p>Қатысататыңызды растаңыз</p>
+
+    <div class="invite-text">
+        <h1>60 жас</13>
+        <h2>
+        <b>Құрметті</b> Ағайын - туыс, Құда - жекжат, Достар!<br>
+        Сіз(дер)ді асқар тау әкеміз<br>
+        <b>Серіктің</b> 60 жас мерей тойына арналған<br>
+        дастарханымыздың <br>
+        Қадірлі қонағы болуға шақырамыз!<br>
+        </h2>
+    </div>
+
+    <div class="event-info">
+        <b>НАУРЫЗ</b> | <b>ДҮЙСЕНБІ</b> | <b>24</b><br>
+        🕕 <b>18:00</b><br>
+        📍 <b>Grand Family Hall</b><br>
+        4-Й МИКРОРАЙОН, 10/2, АЛМАТЫ
+    </div>
+
+    <h2>Қатысуыңызды растауңызды өтінеміз</h2>
 
     <form id="inviteForm">
-        <input type="text" id="name" placeholder="Ваше имя" required>
+        <input type="text" id="name" placeholder="Сіздің атыңыз" required>
+        <label id = "willCome">Келесіз ба?</label>
         <select id="willCome">
             <option value="Да">Иә</option>
             <option value="Нет">Жоқ</option>
         </select>
-        <input type="number" id="extraPeople" placeholder="Сколько человек с вами?" min="0" required>
+        <input type="number" id="extraPeople" placeholder="Сізбен қанша адам келеді?" min="0" required>
         <button type="submit" id="submitBtn">Жіберу</button>
     </form>
 
@@ -101,7 +120,7 @@
             })
                 .then(() => {
                     loader.style.display = "none"; // Скрываем индикатор загрузки
-                    statusText.innerText = "Ответ записан!";
+                    statusText.innerText = "Жауабыңыз жазылды!";
                     submitBtn.style.display = "none"; // Скрываем кнопку после отправки
                 })
                 .catch(error => {

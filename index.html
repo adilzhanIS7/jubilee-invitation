@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на юбилей</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        input,
+        select,
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Стили для загрузочного круга */
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Вы приглашены на юбилей!</h2>
+    <p>Пожалуйста, подтвердите свое участие</p>
+
+    <form id="inviteForm">
+        <input type="text" id="name" placeholder="Ваше имя" required>
+        <select id="willCome">
+            <option value="Да">Да</option>
+            <option value="Нет">Нет</option>
+        </select>
+        <input type="number" id="extraPeople" placeholder="Сколько человек с вами?" min="0" required>
+        <button type="submit" id="submitBtn">Отправить</button>
+    </form>
+
+    <!-- Круговой индикатор загрузки -->
+    <div class="loader" id="loader"></div>
+
+    <p id="status"></p>
+
+    <script>
+        document.getElementById("inviteForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Блокируем стандартную отправку формы
+
+            let name = document.getElementById("name").value;
+            let willCome = document.getElementById("willCome").value;
+            let extraPeople = document.getElementById("extraPeople").value;
+            let submitBtn = document.getElementById("submitBtn");
+            let loader = document.getElementById("loader");
+            let statusText = document.getElementById("status");
+
+            let sheetURL = "https://script.google.com/macros/s/AKfycbxvUTuMDl6n0Bhuv2UEjGtZtjFKWy3Q_o7mjEqdYBqJSbqezBwXehfmMfm_sI0HoD_z/exec"; // Замени на свой Google Apps Script URL
+
+            // Делаем кнопку неактивной и показываем загрузку
+            submitBtn.disabled = true;
+            loader.style.display = "block";
+            statusText.innerText = "";
+
+            fetch(sheetURL, {
+                method: "POST",
+                mode: "no-cors", // Отключаем CORS-блокировки
+                body: JSON.stringify({ name, willCome, extraPeople }),
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(() => {
+                    loader.style.display = "none"; // Скрываем индикатор загрузки
+                    statusText.innerText = "Ответ записан!";
+                    submitBtn.style.display = "none"; // Скрываем кнопку после отправки
+                })
+                .catch(error => {
+                    loader.style.display = "none"; // Скрываем индикатор загрузки
+                    console.error("Ошибка:", error);
+                    statusText.innerText = "Ошибка: " + error;
+                    submitBtn.disabled = false; // Возвращаем кнопку, если ошибка
+                });
+        });
+    </script>
+</body>
+
+</html>
